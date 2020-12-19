@@ -45,7 +45,11 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build --build-arg JAR_FILE=finance-0.0.1-SNAPSHOT.jar -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build --build-arg JAR_FILE=finance-0.0.1-SNAPSHOT.jar \
+                     --build-arg SPRING_DATA_MONGODB_USER_FINANCE=${{ secrets.SPRING_DATA_MONGODB_USER_FINANCE }} \
+                     --build-arg SPRING_DATA_MONGODB_PASSWORD_FINANCE=${{ secrets.SPRING_DATA_MONGODB_PASSWORD_FINANCE }} \
+                     --build-arg SPRING_DATA_MONGODB_DATABASE_FINANCE=${{ secrets.SPRING_DATA_MONGODB_DATABASE_FINANCE }} \
+                     -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
