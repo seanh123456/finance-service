@@ -18,6 +18,10 @@ jobs:
       with:
         java-version: 15
     - name: Build with Maven
+      env:
+        SPRING_DATA_MONGODB_USER_FINANCE: ${{ secrets.SPRING_DATA_MONGODB_USER_FINANCE }}
+        SPRING_DATA_MONGODB_PASSWORD_FINANCE: ${{ secrets.SPRING_DATA_MONGODB_PASSWORD_FINANCE }}
+        SPRING_DATA_MONGODB_DATABASE_FINANCE: ${{ secrets.SPRING_DATA_MONGODB_DATABASE_FINANCE }}
       run: mvn -B package --file pom.xml
 
     - name: Configure AWS credentials
